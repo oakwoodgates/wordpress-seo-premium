@@ -1,0 +1,18 @@
+{
+    "name": "yoast/wp-helpscout",
+    "description": "A package to integrate the helpscout beacon into WordPress",
+    "license": "GPL-3.0+",
+    "authors": [
+        {
+            "name": "Team Yoast",
+            "email": "support@yoast.com",
+            "homepage": "https://yoast.com"
+        }
+    ],
+    "autoload": {
+        "classmap": [ "src/" ],
+        "files": [ "src/functions.php" ]
+    },
+    "require": {
+    }
+}
