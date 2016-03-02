@@ -256,5 +256,44 @@
         "keywords": [
             "wordpress"
         ]
+    },
+    {
+        "name": "yoast/wp-helpscout",
+        "version": "1.0.0",
+        "version_normalized": "1.0.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/Yoast/wp-helpscout.git",
+            "reference": "61d402a7f89ea4d55bbb477c739151d69840e5ee"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/Yoast/wp-helpscout/zipball/61d402a7f89ea4d55bbb477c739151d69840e5ee",
+            "reference": "61d402a7f89ea4d55bbb477c739151d69840e5ee",
+            "shasum": ""
+        },
+        "time": "2016-02-26 13:11:02",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "classmap": [
+                "src/"
+            ],
+            "files": [
+                "src/functions.php"
+            ]
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "GPL-3.0+"
+        ],
+        "authors": [
+            {
+                "name": "Team Yoast",
+                "email": "support@yoast.com",
+                "homepage": "https://yoast.com"
+            }
+        ],
+        "description": "A package to integrate the helpscout beacon into WordPress"
     }
 ]

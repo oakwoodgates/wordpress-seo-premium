@@ -5,7 +5,7 @@
 
 /**
  * Plugin Name: Yoast SEO Premium
- * Version: 3.0.7
+ * Version: 3.1
  * Plugin URI: https://yoast.com/wordpress/plugins/seo/#utm_source=wpadmin&utm_medium=plugin&utm_campaign=wpseoplugin
  * Description: The first true all-in-one SEO solution for WordPress, including on-page content analysis, XML sitemaps and much more.
  * Author: Team Yoast
@@ -37,30 +37,47 @@ if ( ! defined( 'WPSEO_FILE' ) ) {
 	define( 'WPSEO_FILE', __FILE__ );
 }
 
-if ( is_admin() ) {
-	// Add the hook to upgrade premium.
-	require_once( plugin_dir_path( WPSEO_FILE ) . 'premium/classes/class-upgrade-manager.php' );
-	add_action( 'wpseo_run_upgrade', array( new WPSEO_Upgrade_Manager, 'check_update' ) );
+$wpseo_premium_dir = plugin_dir_path( WPSEO_FILE ) . 'premium/';
+
+// Run the redirects when frontend is being opened.
+if ( ! is_admin() ) {
+	require_once( $wpseo_premium_dir . 'classes/redirect/class-redirect-handler.php' );
+
+	new WPSEO_Redirect_Handler();
 }
 
 // Load the WordPress SEO plugin.
 require_once( 'wp-seo-main.php' );
+require_once( WPSEO_PATH . 'premium/class-premium.php' );
+
+WPSEO_Premium::autoloader();
+
+/**
+ * Run the upgrade for Yoast SEO Premium.
+ */
+function wpseo_premium_run_upgrade() {
+	$upgrade_manager = new WPSEO_Upgrade_Manager();
+	$upgrade_manager->run_upgrade( WPSEO_VERSION );
+}
+
+/*
+ * If the user is admin, check for the upgrade manager.
+ * Considered to use 'admin_init' but that is called too late in the process.
+ */
+if ( is_admin() ) {
+	add_action( 'init', 'wpseo_premium_run_upgrade' );
+}
 
 /**
  * The premium setup
  */
 function wpseo_premium_init() {
-	if ( file_exists( WPSEO_PATH . 'premium/class-premium.php' ) ) {
-		require_once( WPSEO_PATH . 'premium/class-premium.php' );
-
-		new WPSEO_Premium();
-	}
+	new WPSEO_Premium();
 }
 
 add_action( 'plugins_loaded', 'wpseo_premium_init', 14 );
 
 // Activation hook.
 if ( is_admin() ) {
-	require_once( WPSEO_PATH . 'premium/class-premium.php' );
 	register_activation_hook( __FILE__, array( 'WPSEO_Premium', 'install' ) );
 }
