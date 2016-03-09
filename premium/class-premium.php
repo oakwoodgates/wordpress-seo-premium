@@ -23,7 +23,7 @@ class WPSEO_Premium {
 
 	const OPTION_CURRENT_VERSION = 'wpseo_current_version';
 
-	const PLUGIN_VERSION_NAME = '3.1';
+	const PLUGIN_VERSION_NAME = '3.1.2';
 	const PLUGIN_VERSION_CODE = '16';
 	const PLUGIN_AUTHOR = 'Yoast';
 	const EDD_STORE_URL = 'http://yoast.com';
@@ -45,8 +45,6 @@ class WPSEO_Premium {
 		// Create the upload directory.
 		WPSEO_Redirect_File_Util::create_upload_dir();
 
-		WPSEO_Premium::import_redirects_from_free();
-
 		WPSEO_Premium::activate_license();
 	}
 
@@ -63,30 +61,6 @@ class WPSEO_Premium {
 		}
 
 		return $license_manager;
-	}
-
-	/**
-	 * Check if redirects should be imported from the free version
-	 */
-	public static function import_redirects_from_free() {
-		$query_redirects = new WP_Query( 'post_type=any&meta_key=_yoast_wpseo_redirect&order=ASC' );
-
-		if ( ! empty( $query_redirects->posts ) ) {
-			WPSEO_Premium::autoloader();
-
-			$redirect_manager = new WPSEO_URL_Redirect_Manager();
-
-			foreach ( $query_redirects->posts as $post ) {
-				$old_url = '/' . $post->post_name . '/';
-				$new_url = get_post_meta( $post->ID, '_yoast_wpseo_redirect', true );
-
-				// Create redirect.
-				$redirect_manager->create_redirect( $old_url, $new_url, 301 );
-
-				// Remove post meta value.
-				delete_post_meta( $post->ID, '_yoast_wpseo_redirect' );
-			}
-		}
 	}
 
 	/**
