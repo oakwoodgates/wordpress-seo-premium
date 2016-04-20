@@ -23,7 +23,7 @@ class WPSEO_Premium {
 
 	const OPTION_CURRENT_VERSION = 'wpseo_current_version';
 
-	const PLUGIN_VERSION_NAME = '3.1.3';
+	const PLUGIN_VERSION_NAME = '3.2';
 	const PLUGIN_VERSION_CODE = '16';
 	const PLUGIN_AUTHOR = 'Yoast';
 	const EDD_STORE_URL = 'http://yoast.com';
@@ -157,6 +157,7 @@ class WPSEO_Premium {
 		}
 
 		add_action( 'admin_init', array( $this, 'enqueue_multi_keyword' ) );
+		add_action( 'admin_init', array( $this, 'enqueue_social_previews' ) );
 	}
 
 	/**
@@ -199,14 +200,34 @@ class WPSEO_Premium {
 			'edit.php',
 			), true ) ) {
 			new WPSEO_Multi_Keyword();
+
 		}
+	}
+
+	/**
+	 * Adds multi keyword functionality if we are on the correct pages
+	 */
+	public function enqueue_social_previews() {
+		global $pagenow;
+
+		$metabox_pages = array(
+			'post-new.php',
+			'post.php',
+			'edit.php',
+		);
+
+		$social_previews = new WPSEO_Social_Previews();
+		if ( in_array( $pagenow , $metabox_pages, true ) || WPSEO_Taxonomy::is_term_edit( $pagenow ) ) {
+			$social_previews->set_hooks();
+		}
+		$social_previews->set_ajax_hooks();
 	}
 
 	/**
 	 * Hooks into the `redirect_canonical` filter to catch ongoing redirects and move them to the correct spot
 	 *
-	 * @param string $redirect_url  The target url where the requested url will be redirected to.
-	 * @param string $requested_url The current requested url.
+	 * @param string $redirect_url  The target url where the requested URL will be redirected to.
+	 * @param string $requested_url The current requested URL.
 	 *
 	 * @return string
 	 */
@@ -331,15 +352,6 @@ class WPSEO_Premium {
 			apply_filters( 'wpseo_premium_manage_redirects_role', 'manage_options' ),
 			'wpseo_redirects',
 			array( $this->redirects, 'display' ),
-		);
-
-		$submenu_pages[] = array(
-			'wpseo_dashboard',
-			'',
-			__( 'Video Tutorials', 'wordpress-seo-premium' ),
-			'edit_posts',
-			'wpseo_tutorial_videos',
-			array( 'WPSEO_Tutorial_Videos', 'display' ),
 		);
 
 		return $submenu_pages;
