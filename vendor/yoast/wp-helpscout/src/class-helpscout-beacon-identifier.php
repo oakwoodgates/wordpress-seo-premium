@@ -97,8 +97,7 @@ class Yoast_HelpScout_Beacon_Identifier {
 	 * @return string
 	 */
 	private function get_user_info( $what = 'name' ) {
-		global $current_user;
-		get_currentuserinfo();
+		$current_user = wp_get_current_user();
 
 		switch ( $what ) {
 			case 'email':
