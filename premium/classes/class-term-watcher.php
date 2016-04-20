@@ -138,7 +138,7 @@ class WPSEO_Term_Watcher extends WPSEO_Watcher {
 	}
 
 	/**
-	 * Get the old url
+	 * Get the old URL
 	 *
 	 * @return bool|string
 	 */
@@ -183,7 +183,7 @@ class WPSEO_Term_Watcher extends WPSEO_Watcher {
 	 * @return string
 	 */
 	protected function get_undo_slug_notification() {
-		/* translators %1$s: Yoast SEO Premium, %2$s: <a href='{admin_redirect_url}'>, %3$s: <a href='{undo_redirect_url}'> and %4$s: </a> */
+		/* translators: %1$s: Yoast SEO Premium, %2$s: <a href='{admin_redirect_url}'>, %3$s: <a href='{undo_redirect_url}'> and %4$s: </a> */
 		$undo_message = __(
 			'%1$s created a %2$sredirect%4$s from the old term URL to the new term URL. %3$sClick here to undo this%4$s.',
 			'wordpress-seo-premium'
@@ -198,11 +198,10 @@ class WPSEO_Term_Watcher extends WPSEO_Watcher {
 	 * @return string
 	 */
 	protected function get_delete_notification() {
-		/* translators %1$s: Yoast SEO Premium, %2$s: List with actions, %3$s: <a href='{post_with_explaination.}'>, %4$s: </a> */
+		/* translators: %1$s: Yoast SEO Premium, %2$s: List with actions, %3$s: <a href='{post_with_explaination.}'>, %4$s: </a> */
 		return __(
 			'%1$s detected that you deleted a term. You can either: %2$s Don\'t know what to do? %3$sRead this post %4$s.',
 			'wordpress-seo-premium'
 		);
 	}
-
 }

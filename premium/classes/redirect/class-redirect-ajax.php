@@ -23,7 +23,7 @@ class WPSEO_Redirect_Ajax {
 	 *
 	 * @param string $redirect_format The redirects format.
 	 */
-	public function __construct( $redirect_format) {
+	public function __construct( $redirect_format ) {
 		$this->redirect_manager = new WPSEO_Redirect_Manager( $redirect_format );
 		$this->redirect_format  = $redirect_format;
 
@@ -204,12 +204,11 @@ class WPSEO_Redirect_Ajax {
 	/**
 	 * Sanitize the URL for displaying on the window
 	 *
-	 * @param string $url The url to sanitize.
+	 * @param string $url The URL to sanitize.
 	 *
 	 * @return string
 	 */
 	private function sanitize_url( $url ) {
 		return trim( htmlspecialchars_decode( rawurldecode( $url ) ) );
 	}
-
 }

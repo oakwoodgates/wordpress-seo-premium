@@ -42,7 +42,7 @@ class WPSEO_Redirect_Table_Presenter extends WPSEO_Redirect_Tab_Presenter {
 	}
 
 	/**
-	 * Get the old url from the URL
+	 * Get the old URL from the URL
 	 *
 	 * @return string
 	 */
@@ -69,5 +69,4 @@ class WPSEO_Redirect_Table_Presenter extends WPSEO_Redirect_Tab_Presenter {
 
 		return __( 'Old URL', 'wordpress-seo-premium' );
 	}
-
 }
